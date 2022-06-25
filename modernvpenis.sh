@@ -22,9 +22,9 @@ cpuCountMHzArray=($(cat /proc/cpuinfo | grep "cpu MHz" | sed 's/\..*$//' | awk '
 sumCPUMHz="$(( ${cpuCountMHzArray[@]/%/ +} 0))"
 
 # use bc to get the average clock speed across the whole CPU
-averageCPUMHz=`echo "$sumCPUMHz / $coreCount" | $(perl -e "print $b+$c")`
+averageCPUMHz=$(expr $sumCPUMHz / $cpuCoreCount)
 
-#echo average core clock speed: $averageCPUMHz
+echo average core clock speed: $averageCPUMHz
 
 
 # cpu details
