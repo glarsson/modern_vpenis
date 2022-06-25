@@ -7,6 +7,26 @@
 BGreen='\033[1;32m' # Green
 NC='\033[0m'    # No Color
 
+# commands
+check_mountpoint(){
+if  mountpoint -q $1
+  then
+                #printf "%s\n" "$1 is mounted"
+                return 0
+            else
+                #printf "%s\n" "$1 is not mounted"
+                return 1
+fi
+}
+
+check_mountpoint /media/sd 
+if [ $? -gt 0 ]
+  then
+    #printf "%s\n" "aborting"
+    exit 0
+fi
+
+
 # get processor model name
 cpuModelName=$(cat /proc/cpuinfo | grep "model name" | sed -n '1{p;q}')
 
@@ -23,9 +43,6 @@ sumCPUMHz="$(( ${cpuCountMHzArray[@]/%/ +} 0))"
 
 # use bc to get the average clock speed across the whole CPU
 averageCPUMHz=$(expr $sumCPUMHz / $cpuCoreCount)
-
-echo average core clock speed: $averageCPUMHz
-
 
 # cpu details
 echo "CPU INFO (simple)"
@@ -44,10 +61,6 @@ ramTotal=($(sudo free -h | awk 'FNR == 2 {print $2}' ))
 ramUsed=($(sudo free -h | awk 'FNR == 2 {print $3}' ))
 ramFree=($(sudo free -h | awk 'FNR == 2 {print $4}' ))
 ramSwap=($(sudo free -h | awk 'FNR == 3 {print $2}' ))
-
-#ramUsed  = free -h | awk 'FNR == 2 {print $3}'
-#ramFree  = free -h | awk 'FNR == 2 {print $4}'
-#ramSwap  = free -h | awk 'FNR == 3 {print $2}'
 
 echo -e "${NC}Total amount of RAM:                              ${BGreen} $ramTotal"
 echo -e "${NC}Total amount of used RAM:                         ${BGreen} $ramUsed"
@@ -74,5 +87,32 @@ echo -e "\033[0m"
 
 # simple disk details
 
+echo -e "${NC}DISK INFO (simple)"
+
+rootSize=$(df -h | awk 'FNR == 2 '{print $2}')
+rootUsed=$(df -h | awk 'FNR == 2 '{print $3}')
+rootFree=$(df -h | awk 'FNR == 2 '{print $4}')
+rootUsedProcent=$(df -h | awk 'FNR == 2 '{print $5}')
+
+echo -e "${NC}Root mount size:                                  ${BGreen} $rootSize"
+echo -e "${NC}Root mount used:                                  ${BGreen} $rootUsed"
+echo -e "${NC}Root mount free in GB:                            ${BGreen} $rootFree"
+echo -e "${NC}Root volume used in procent:                      ${BGreen} $rootUsedProcent"
+echo -e "\033[0m"
+
+if (check_mountpoint /home == true)
+  then
+    homeSize=$(df -h | awk 'FNR == 3 '{print $2}')
+    homeUsed=$(df -h | awk 'FNR == 3 '{print $3}')
+    homeFree=$(df -h | awk 'FNR == 3 '{print $4}')
+    homeUsedProcent=$(df -h | awk 'FNR == 3 '{print $5}')
+    echo -e "${NC}Home mount size:                                 ${BGreen} $homeSize"
+    echo -e "${NC}Home mount used:                                 ${BGreen} $homeUsed"
+    echo -e "${NC}Home mount free in GB:                           ${BGreen} $homeFree"
+    echo -e "${NC}Home volume used in procent:                     ${BGreen} $homeUsedProcent"
+    echo -e "\033[0m"
+fi
+else echo -e "${NC}No home folder specially mounted"
+fi
 
 # GPU details
