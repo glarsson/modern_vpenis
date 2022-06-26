@@ -130,7 +130,7 @@ echo -e "\033[0m"
 # Internet speed details
 # check if defined
 if $ENABLE_INTERNET_SPEED_TEST ; then
-echo -e "${NC}INTERNET DETAILS (if INTERNET_TESTS specifically defined, speed needs separate package)"
+echo -e "${NC}INTERNET DETAILS (ENABLE_INTERNET_SPEED_TEST is true, if you have a crap connection this will take minutes)"
 
 # run speedtest (external package) to gather internet speeds based on its defaults
 # but save float result and metric value separately if needed if client has GB's or god forbid Kb's)
