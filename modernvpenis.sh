@@ -151,7 +151,7 @@ pingEightEightEightEIght=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}'
   echo -e "\033[0m"
 
 # print the results
-echo -e "${NC}Internet download speed                           ${BGreen} $internetDownloadSpeedValue $internetDownloadSpeedMetric"
+echo -e "${NC}Internet download speed:                          ${BGreen} $internetDownloadSpeedValue $internetDownloadSpeedMetric"
 echo -e "${NC}Internet upload speed:                            ${BGreen} $internetUploadSpeedValue $internetUploadSpeedMetric"
 echo -e "\033[0m"
 fi
