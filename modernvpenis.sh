@@ -145,23 +145,23 @@ pingGoogleCom=$(ping -c 4 www.google.com | tail -1 | awk -F '/' '{print $5}')
 pingOneOneOneOne=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 pingEightEightEightEIght=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 
-  echo -e "${NC}Average ping result to www.google.com:            ${BGreen} $pingGoogleCom"
-  echo -e "${NC}Average ping result to DNS server 1.1.1.1:        ${BGreen} $pingOneOneOneOne"
-  echo -e "${NC}Average ping result to DNS server 8.8.8.8:        ${BGreen} $pingEightEightEightEIght"
+  echo -e "${NC}Average ping result to www.google.com:          ${BGreen} $pingGoogleCom"
+  echo -e "${NC}Average ping result to DNS server 1.1.1.1:      ${BGreen} $pingOneOneOneOne"
+  echo -e "${NC}Average ping result to DNS server 8.8.8.8:      ${BGreen} $pingEightEightEightEIght"
   echo -e "\033[0m"
 
 # print the results
-echo -e "${NC}Internet download speed:                          ${BGreen} $internetDownloadSpeedValue $internetDownloadSpeedMetric"
+echo -e "${NC}Internet download speed                           ${BGreen} $internetDownloadSpeedValue $internetDownloadSpeedMetric"
 echo -e "${NC}Internet upload speed:                            ${BGreen} $internetUploadSpeedValue $internetUploadSpeedMetric"
 echo -e "\033[0m"
-
-# Network latency details / should change this to ping local resources and skip internet if INTERNET_TESTS not defined
-echo -e "${NC}NETWORK LATENCY DETAILS (if INTERNET_TESTS specifically defined, no package neededed)"
-
-  else
-    networkGateway=$(ip r | grep default | awk {'print $3'})
-    echo -e "${NC}INTERNET SPEED TEST (disabled)"
-    echo -e "\033[0m"
-    echo -e "${NC}Average ping result to your local LAN GW:     ${BGreen} $pingNetworkGateway"
-    echo -e "\033[0m"
 fi
+
+# Network latency details
+echo -e "${NC}LAN LATENCY DETAILS)"
+
+# get WAN/router IP
+networkGateway=$(ip r | grep default | awk {'print $3'})
+
+# ping local router and produce average
+echo -e "${NC}Average ping result to your local LAN GW:         ${BGreen} $pingNetworkGateway"
+echo -e "\033[0m"
