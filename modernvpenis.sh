@@ -161,6 +161,7 @@ pingNetworkGateway=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 pingGoogleCom=$(ping -c 4 www.google.com | tail -1 | awk -F '/' '{print $5}')
 pingOneOneOneOne=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 pingEightEightEightEIght=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
+fi
 
 # display the results
 
@@ -171,4 +172,3 @@ if ENABLE_INERNET_SPEED_TEST == true
     echo -e "${NC}Average ping result to DNS server 8.8.8.8:            ${BGreen} $pingEightEightEightEIght"
     echo -e "\033[0m"
 fi
-
