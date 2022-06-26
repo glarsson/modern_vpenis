@@ -129,7 +129,7 @@ echo -e "\033[0m"
 
 # Internet speed details
 # check if defined
-if ENABLE_INERNET_SPEED_TEST == true
+if $ENABLE_INERNET_SPEED_TEST == true
   then
 echo -e "${NC}INTERNET DETAILS (if INTERNET_TESTS specifically defined, speed needs separate package)"
 
@@ -153,10 +153,10 @@ echo -e "${NC}NETWORK LATENCY DETAILS (if INTERNET_TESTS specifically defined, n
     echo -e "\033[0m"
 fi
 
-if ENABLE_INERNET_SPEED_TEST == false
+if $ENABLE_INERNET_SPEED_TEST == false
   then
     # check if defined
-    if ENABLE_INERNET_SPEED_TEST == false
+    if $ENABLE_INERNET_SPEED_TEST == false
       then
         # get LAN gateway address
         networkGateway=$(ip r | grep default | awk {'print $3'})
