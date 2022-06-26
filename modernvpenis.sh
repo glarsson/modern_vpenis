@@ -10,7 +10,7 @@
 # DEFINE HERE PLEASE!!! IF YOU HAVE A LOW INTERNET CONNECTIONN THIS TAKES AGES
 # RUN INTERNET SPEED TEST OR NOT: TRUE or FALSE
 
-$ENABLE_INTERNET_SPEED_TEST=TRUE
+$ENABLE_INTERNET_SPEED_TEST=$true
 
 # install required packages
 sudo apt -qq update && apt -qq install -y speedtest-cli
