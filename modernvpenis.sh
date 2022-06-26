@@ -1,14 +1,19 @@
 #/bin/bash
 # terrible version of Meyers of epenis.sh script, trying to get it updated for modern hardware. Help needed :)
 # written by gerry.larsson@gmail.com
-# Version 0.02 (26/6/2022)
+# Version 0.04 (26/6/2022)
 
 # disclamer: this script requires the following:
 # root access
 # packages: speedtest-cli
 
+# DEFINE HERE PLEASE!!! IF YOU HAVE A LOW INTERNET CONNECTIONN THIS TAKES AGES
+# RUN INTERNET SPEED TEST OR NOT: TRUE or FALSE
+
+ENABLE_INERNET_SPEED_TEST=FALSE
+
 # install required packages
-sudo apt install speedtest-cli -y
+sudo apt -qq update && apt -qq install -y speedtest-cli
 
 # colors
 BGreen='\033[1;32m' # Green
@@ -123,6 +128,9 @@ fi
 echo -e "\033[0m"
 
 # Internet speed details
+# check if defined
+if ENABLE_INERNET_SPEED_TEST == true
+  then
 echo -e "${NC}INTERNET DETAILS (if INTERNET_TESTS specifically defined, speed needs separate package)"
 
 # run speedtest (external package) to gather internet speeds based on its defaults
@@ -140,8 +148,21 @@ echo -e "\033[0m"
 # Network latency details / should change this to ping local resources and skip internet if INTERNET_TESTS not defined
 echo -e "${NC}NETWORK LATENCY DETAILS (if INTERNET_TESTS specifically defined, no package neededed)"
 
-# get LAN gateway address
-networkGateway=$(ip r | grep default | awk {'print $3'})
+  else
+    echo -e "${NC}INTERNET SPEED TEST (disabled)"
+    echo -e "\033[0m"
+fi
+
+if ENABLE_INERNET_SPEED_TEST == false
+  then
+    # check if defined
+    if ENABLE_INERNET_SPEED_TEST == false
+      then
+        # get LAN gateway address
+        networkGateway=$(ip r | grep default | awk {'print $3'})
+            echo -e "${NC}INTERNET SPEED TEST (disabled)"
+            echo -e "${NC}Average ping result to your local LAN GW:  ${BGreen} $pingNetworkGateway"
+fi
 
 # ping hosts and average out their 4 replies
 pingNetworkGateway=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
@@ -150,8 +171,12 @@ pingOneOneOneOne=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 pingEightEightEightEIght=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 
 # display the results
-echo -e "${NC}Average ping result to your local LAN gateway:    ${BGreen} $pingNetworkGateway"
-echo -e "${NC}Average ping result to www.google.com:            ${BGreen} $pingGoogleCom"
-echo -e "${NC}Average ping result to DNS server 1.1.1.1:        ${BGreen} $pingOneOneOneOne"
-echo -e "${NC}Average ping result to DNS server 8.8.8.8:        ${BGreen} $pingEightEightEightEIght"
-echo -e "\033[0m"
+
+if ENABLE_INERNET_SPEED_TEST == true
+  then
+    echo -e "${NC}Average ping result to www.google.com:                ${BGreen} $pingGoogleCom"
+    echo -e "${NC}Average ping result to DNS server 1.1.1.1:            ${BGreen} $pingOneOneOneOne"
+    echo -e "${NC}Average ping result to DNS server 8.8.8.8:            ${BGreen} $pingEightEightEightEIght"
+    echo -e "\033[0m"
+fi
+
