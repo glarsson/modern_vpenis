@@ -10,7 +10,7 @@
 # DEFINE HERE PLEASE!!! IF YOU HAVE A LOW INTERNET CONNECTIONN THIS TAKES AGES
 # RUN INTERNET SPEED TEST OR NOT: TRUE or FALSE
 
-ENABLE_INERNET_SPEED_TEST=FALSE
+$ENABLE_INTERNET_SPEED_TEST=TRUE
 
 # install required packages
 sudo apt -qq update && apt -qq install -y speedtest-cli
@@ -129,7 +129,7 @@ echo -e "\033[0m"
 
 # Internet speed details
 # check if defined
-if $ENABLE_INERNET_SPEED_TEST == true
+if $ENABLE_INTERNET_SPEED_TEST == true
   then
 echo -e "${NC}INTERNET DETAILS (if INTERNET_TESTS specifically defined, speed needs separate package)"
 
@@ -149,11 +149,11 @@ echo -e "\033[0m"
 echo -e "${NC}NETWORK LATENCY DETAILS (if INTERNET_TESTS specifically defined, no package neededed)"
 
   else
-    echo -e "${NC}INTERNET SPEED TEST (disabled)"
-    echo -e "\033[0m"
     networkGateway=$(ip r | grep default | awk {'print $3'})
     echo -e "${NC}INTERNET SPEED TEST (disabled)"
-    echo -e "${NC}Average ping result to your local LAN GW:  ${BGreen} $pingNetworkGateway"
+    echo -e "\033[0m"
+    echo -e "${NC}INTERNET SPEED TEST (disabled)"
+    echo -e "${NC}Average ping result to your local LAN GW:     ${BGreen} $pingNetworkGateway"
     echo -e "\033[0m"
 
 # ping hosts and average out their 4 replies
@@ -161,14 +161,12 @@ pingNetworkGateway=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 pingGoogleCom=$(ping -c 4 www.google.com | tail -1 | awk -F '/' '{print $5}')
 pingOneOneOneOne=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 pingEightEightEightEIght=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
-fi
 
 # display the results
 
-if ENABLE_INERNET_SPEED_TEST == true
-  then
-    echo -e "${NC}Average ping result to www.google.com:                ${BGreen} $pingGoogleCom"
-    echo -e "${NC}Average ping result to DNS server 1.1.1.1:            ${BGreen} $pingOneOneOneOne"
-    echo -e "${NC}Average ping result to DNS server 8.8.8.8:            ${BGreen} $pingEightEightEightEIght"
-    echo -e "\033[0m"
+else
+  echo -e "${NC}Average ping result to www.google.com:            ${BGreen} $pingGoogleCom"
+  echo -e "${NC}Average ping result to DNS server 1.1.1.1:        ${BGreen} $pingOneOneOneOne"
+  echo -e "${NC}Average ping result to DNS server 8.8.8.8:        ${BGreen} $pingEightEightEightEIght"
+  echo -e "\033[0m"
 fi
