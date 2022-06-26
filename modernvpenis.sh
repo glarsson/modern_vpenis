@@ -151,18 +151,10 @@ echo -e "${NC}NETWORK LATENCY DETAILS (if INTERNET_TESTS specifically defined, n
   else
     echo -e "${NC}INTERNET SPEED TEST (disabled)"
     echo -e "\033[0m"
-fi
-
-if $ENABLE_INERNET_SPEED_TEST == false
-  then
-    # check if defined
-    if $ENABLE_INERNET_SPEED_TEST == false
-      then
-        # get LAN gateway address
-        networkGateway=$(ip r | grep default | awk {'print $3'})
-            echo -e "${NC}INTERNET SPEED TEST (disabled)"
-            echo -e "${NC}Average ping result to your local LAN GW:  ${BGreen} $pingNetworkGateway"
-fi
+    networkGateway=$(ip r | grep default | awk {'print $3'})
+    echo -e "${NC}INTERNET SPEED TEST (disabled)"
+    echo -e "${NC}Average ping result to your local LAN GW:  ${BGreen} $pingNetworkGateway"
+    echo -e "\033[0m"
 
 # ping hosts and average out their 4 replies
 pingNetworkGateway=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
