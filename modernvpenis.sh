@@ -142,7 +142,6 @@ internetUploadSpeedValue=$(speedtest | grep Upload | awk '{print $2}')
 internetUploadSpeedMetric=$(speedtest | grep Upload | awk '{print $3}')
 
 # ping hosts and average out their 4 replies
-pingNetworkGateway=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 pingGoogleCom=$(ping -c 4 www.google.com | tail -1 | awk -F '/' '{print $5}')
 pingOneOneOneOne=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
 pingEightEightEightEIght=$(ping -c 4 1.1.1.1 | tail -1 | awk -F '/' '{print $5}')
@@ -159,11 +158,11 @@ echo -e "\033[0m"
 fi
 
 # Network latency details
-echo -e "${NC}LAN LATENCY DETAILS)"
+echo -e "${NC}LAN LATENCY DETAILS"
 
 # get WAN/router IP
 networkGateway=$(ip r | grep default | awk {'print $3'})
-
+pingNetworkGateway=$(ping -c 4 $networkGateway | tail -1 | awk -F '/' '{print $5}')
 # ping local router and produce average
 echo -e "${NC}Average ping result to your local LAN GW:         ${BGreen} $pingNetworkGateway"
 echo -e "\033[0m"
