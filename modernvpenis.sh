@@ -129,7 +129,7 @@ echo -e "\033[0m"
 
 # Internet speed details
 # check if defined
-if $ENABLE_INTERNET_SPEED_TEST == true
+if $ENABLE_INTERNET_SPEED_TEST=$true
   then
 echo -e "${NC}INTERNET DETAILS (if INTERNET_TESTS specifically defined, speed needs separate package)"
 
