@@ -10,10 +10,12 @@
 # DEFINE HERE PLEASE!!! IF YOU HAVE A LOW INTERNET CONNECTIONN THIS TAKES AGES
 # RUN INTERNET SPEED TEST OR NOT: TRUE or FALSE
 
-ENABLE_INTERNET_SPEED_TEST=true
+ENABLE_INTERNET_SPEED_TEST=false
 
+if $ENABLE_INTERNET_SPEED_TEST ; then
 # install required packages
 sudo apt -qq update && apt -qq install -y speedtest-cli
+fi
 
 # colors
 BGreen='\033[1;32m' # Green
